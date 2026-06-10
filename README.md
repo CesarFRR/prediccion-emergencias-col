@@ -49,6 +49,17 @@ python main.py --depto 05
 
 El unico archivo que necesitas aportar es el registro historico de emergencias de tu departamento. El wizard (`python main.py --nuevo`) te guia con el formato exacto.
 
+### Opcionales (mejoran el modelo)
+
+| Dato | Para que sirve | Como obtenerlo |
+|------|----------------|----------------|
+| **DEM 30m** (modelo de elevacion) | Pendiente, elevacion, HAND, flow accumulation | Descargar tiles AW3D30 de [JAXA](https://www.eorc.jaxa.jp/ALOS/en/aw3d30/) (~200 MB por depto) |
+| **HAND** (altura sobre rio) | Riesgo de inundacion fluvial | Se calcula con pysheds a partir del DEM |
+| **Grafo de drenaje** | Precipitacion aguas arriba, Physics-AI | Se extrae del GPKG con `core/extractor_geopackage.py` |
+| **ALOS-2 Banda L** | Penetrar dosel forestal (municipios ciegos al SAR) | [JAXA G-Portal](https://auig2.jaxa.jp/) (requiere cuenta) |
+
+**Sin estos datos el modelo funciona en Nivel 1-2 (AUROC 0.75-0.93).** Con DEM + HAND + grafo se activa Physics-AI (Nivel 3, AUROC 0.93-0.95) que detecta inundaciones incluso en municipios donde el radar Sentinel-1 no funciona por la vegetacion densa.
+
 ---
 
 ## 📁 Estructura

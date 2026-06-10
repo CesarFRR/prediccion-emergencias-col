@@ -1,0 +1,77 @@
+{
+  "datos_satelitales": {
+    "CHIRPS": {
+      "url": "https://www.chc.ucsb.edu/data/chirps",
+      "gee_collection": "UCSB-CHG/CHIRPS/DAILY",
+      "resolucion": "0.05° (~5km)",
+      "cobertura": "1981-presente, global",
+      "script_extraccion": "gee/extraccion_colombia.js"
+    },
+    "Sentinel1_SAR": {
+      "url": "https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1",
+      "gee_collection": "COPERNICUS/S1_GRD",
+      "resolucion": "10m",
+      "cobertura": "2014-presente, global",
+      "script_extraccion": "gee/extraccion_colombia.js"
+    },
+    "ALOS2_BandaL": {
+      "url": "https://auig2.jaxa.jp/ips/home",
+      "resolucion": "10m",
+      "cobertura": "2014-presente, por escena",
+      "nota": "Requiere cuenta JAXA G-Portal"
+    }
+  },
+  "topografia": {
+    "AW3D30_DEM": {
+      "url": "https://www.eorc.jaxa.jp/ALOS/en/aw3d30/data/index.htm",
+      "resolucion": "30m",
+      "cobertura": "global"
+    },
+    "SRTM30": {
+      "url": "https://earthexplorer.usgs.gov/",
+      "resolucion": "30m",
+      "cobertura": "global"
+    }
+  },
+  "clima": {
+    "NOAA_ONI": {
+      "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+      "cobertura": "1950-presente, global"
+    },
+    "NOAA_SOI": {
+      "url": "https://www.cpc.ncep.noaa.gov/data/indices/soi"
+    },
+    "NOAA_QBO": {
+      "url": "https://www.cpc.ncep.noaa.gov/data/indices/qbo.u50.index"
+    }
+  },
+  "cartografia": {
+    "IGAC_Carto100000": {
+      "url": "https://geoportal.igac.gov.co/",
+      "descripcion": "Cartografía base 1:100,000 de Colombia",
+      "archivo_local": "datos_globales/Carto100000_Colombia_DI_2022.gpkg"
+    },
+    "DANE_MGN": {
+      "url": "https://geoportal.dane.gov.co/",
+      "descripcion": "Marco Geoestadístico Nacional (límites municipales con DIVIPOLA)"
+    },
+    "IDEAM_ZonasHidrograficas": {
+      "url": "http://www.ideam.gov.co/",
+      "descripcion": "Zonificación hidrográfica de Colombia (41 zonas)"
+    }
+  },
+  "emergencias": {
+    "UNGRD": {
+      "url": "https://www.gestiondelriesgo.gov.co/",
+      "descripcion": "Unidad Nacional de Gestión del Riesgo. Datos vía derechos de petición."
+    },
+    "DesInventar": {
+      "url": "https://www.desinventar.org/",
+      "descripcion": "Base de datos histórica de desastres en Latinoamérica (1970-presente)"
+    },
+    "DAGRAN": {
+      "url": "https://www.dagran.gov.co/",
+      "descripcion": "Departamento de Gestión del Riesgo de Antioquia. Solo Antioquia."
+    }
+  }
+}

@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+.env
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ─── DATOS (archivos grandes, se descargan con app.py) ───
+datos_globales/*
+!datos_globales/.gitkeep
+
+# ─── DEPARTAMENTOS (datos por usuario) ───
+departamentos/*
+!departamentos/.gitkeep
+
+# ─── OUTPUTS ───
+*.csv
+*.parquet
+!requirements.txt
+
+# ─── GPKG y GIS ───
+*.gpkg
+*.tif
+*.tiff
+*.shp
+*.shx
+*.dbf
+*.gdb/

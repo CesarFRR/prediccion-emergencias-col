@@ -53,7 +53,7 @@ El unico archivo que necesitas aportar es el registro historico de emergencias d
 
 | Dato | Para que sirve | Como obtenerlo |
 |------|----------------|----------------|
-| **DEM 30m** (modelo de elevacion) | Pendiente, elevacion, HAND, flow accumulation | Descargar tiles AW3D30 de [JAXA](https://www.eorc.jaxa.jp/ALOS/en/aw3d30/) (~200 MB por depto) |
+| **DEM 30m** (modelo de elevacion) | Pendiente, elevacion, HAND, flow accumulation | Descargar de [Colombia en Mapas](https://www.colombiaenmapas.gov.co/) (por departamento) |
 | **HAND** (altura sobre rio) | Riesgo de inundacion fluvial | Se calcula con pysheds a partir del DEM |
 | **Grafo de drenaje** | Precipitacion aguas arriba, Physics-AI | Se extrae del GPKG con `core/extractor_geopackage.py` |
 | **ALOS-2 Banda L** | Penetrar dosel forestal (municipios ciegos al SAR) | [JAXA G-Portal](https://auig2.jaxa.jp/) (requiere cuenta) |

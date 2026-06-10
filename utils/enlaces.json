@@ -22,10 +22,10 @@
     }
   },
   "topografia": {
-    "AW3D30_DEM": {
-      "url": "https://www.eorc.jaxa.jp/ALOS/en/aw3d30/data/index.htm",
+    "DEM_Colombia": {
+      "url": "https://www.colombiaenmapas.gov.co/",
       "resolucion": "30m",
-      "cobertura": "global"
+      "cobertura": "Colombia por departamento"
     },
     "SRTM30": {
       "url": "https://earthexplorer.usgs.gov/",

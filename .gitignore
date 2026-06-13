@@ -55,3 +55,6 @@ departamentos/*
 .opencode/
 graphify-out/
 AGENTS.md
+
+# ─── HuggingFace uploads ───
+huggingface_upload/

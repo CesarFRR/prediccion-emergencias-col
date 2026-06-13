@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-FloodModel Colombia — Utilidad de descarga de datos globales
-==============================================================
-Verifica los 4 archivos de datos nacionales. Si faltan, ofrece
-descargarlos desde HuggingFace, Zenodo, GitHub Releases o MediaFire.
+FloodModel Colombia — Descarga de datos
+=========================================
+Uso:
+    python app.py                   # Wizard interactivo
+    python app.py --depto 05        # Solo Antioquia (~116 MB)
+    python app.py --depto 88        # Solo San Andres (~0.7 MB)
+    python app.py --nacional        # TODO Colombia (~1 GB)
+    python app.py --todo            # Todos los deptos (~1.7 GB)
 
-Los archivos .zip se descomprimen automaticamente.
-
-Ejecutar una vez al clonar el repositorio:
-    python app.py
+Fuentes: HuggingFace, Zenodo, GitHub Releases, MediaFire.
 """
 
 import sys, os, zipfile
@@ -224,7 +225,79 @@ def intentar_descarga():
 
 import shutil  # para copyfileobj
 
+HF_BASE = 'https://huggingface.co/buckets/rokudev/floodmodel-colombia/resolve'
+
+DEPARTAMENTOS = {
+    '05':'Antioquia','08':'Atlantico','11':'Bogota','13':'Bolivar','15':'Boyaca',
+    '17':'Caldas','18':'Caqueta','19':'Cauca','20':'Cesar','23':'Cordoba',
+    '25':'Cundinamarca','27':'Choco','41':'Huila','44':'La Guajira','47':'Magdalena',
+    '50':'Meta','52':'Narino','54':'Norte de Santander','63':'Quindio','66':'Risaralda',
+    '68':'Santander','70':'Sucre','73':'Tolima','76':'Valle del Cauca','81':'Arauca',
+    '85':'Casanare','86':'Putumayo','88':'San Andres','91':'Amazonas','94':'Guainia',
+    '95':'Guaviare','97':'Vaupes','99':'Vichada',
+}
+
+
+def descargar_departamento(codigo: str):
+    """Descarga el ZIP de un departamento y lo extrae en departamentos/XX/."""
+    if codigo not in DEPARTAMENTOS:
+        print(f'❌ Codigo {codigo} no valido.')
+        return False
+
+    nombre = DEPARTAMENTOS[codigo].lower().replace(' ', '_')
+    url = f'{HF_BASE}/departamentos/{nombre}_datos.zip'
+    dest_dir = BASE_DIR / 'departamentos' / codigo / 'datos'
+    dest_dir.mkdir(parents=True, exist_ok=True)
+
+    tmp_zip = DATA_DIR / f'_descarga_{codigo}.zip'
+    print(f'   Descargando {DEPARTAMENTOS[codigo]}...')
+    try:
+        urlretrieve(url, tmp_zip, _progreso)
+        print('\n   Extrayendo...')
+        with zipfile.ZipFile(tmp_zip) as zf:
+            zf.extractall(dest_dir)
+        tmp_zip.unlink()
+        mb = sum(f.stat().st_size for f in dest_dir.rglob('*')) / 1e6
+        print(f'   ✅ {mb:.1f} MB en {dest_dir}')
+        return True
+    except Exception as e:
+        print(f'\n   ❌ {e}')
+        if tmp_zip.exists():
+            tmp_zip.unlink()
+        return False
+
+
 if __name__ == '__main__':
-    print('📦 FloodModel Colombia — Datos Globales')
+    import argparse
+    parser = argparse.ArgumentParser(description='FloodModel Colombia — Descarga de datos')
+    parser.add_argument('--depto', type=str, help='Codigo de departamento (05, 76, 88...)')
+    parser.add_argument('--nacional', action='store_true', help='Descargar datos nacionales completos')
+    parser.add_argument('--todo', action='store_true', help='Descargar TODOS los departamentos')
+    args = parser.parse_args()
+
+    print('📦 FloodModel Colombia — Datos')
     print()
-    intentar_descarga()
+
+    if args.depto:
+        if descargar_departamento(args.depto):
+            print('\n✅ Listo. python main.py --depto ' + args.depto)
+    elif args.nacional:
+        intentar_descarga()
+    else:
+        # Wizard
+        print('Opciones:')
+        print('  1. Datos para un departamento (mas rapido)')
+        print('  2. Datos nacionales completos (~1 GB, sin conexion despues)')
+        print('  3. Salir')
+        choice = input('\n  Opcion [1]: ').strip() or '1'
+        if choice == '1':
+            print('\n  Departamentos disponibles:')
+            for cod, nombre in sorted(DEPARTAMENTOS.items()):
+                print(f'    {cod} - {nombre}')
+            cod = input('\n  Codigo: ').strip()
+            if cod in DEPARTAMENTOS:
+                descargar_departamento(cod)
+            else:
+                print(f'  ❌ Codigo no valido.')
+        elif choice == '2':
+            intentar_descarga()

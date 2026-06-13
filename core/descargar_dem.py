@@ -14,12 +14,82 @@ Uso:
 
 import sys, os
 from pathlib import Path
+import tempfile
 import geopandas as gpd
 import rasterio
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEPTOS_DIR = BASE_DIR / 'departamentos'
 GPKG_PATH = BASE_DIR / 'datos_globales' / 'Carto100000_Colombia_DI_2022.gpkg'
+
+
+def _descargar_por_cuadrantes(west, south, east, north, output_path, product='SRTM1'):
+    """Divide un bbox grande en cuadrantes de ~2° y descarga cada uno."""
+    import elevation as _elv
+    chunks = []
+    step = 2.0
+    w = west
+    while w < east:
+        s = south
+        while s < north:
+            w2 = min(w + step, east)
+            s2 = min(s + step, north)
+            fname = output_path.parent / f'_chunk_{w:.1f}_{s:.1f}.tif'
+            if not fname.exists():
+                try:
+                    _elv.clip(bounds=(w, s, w2, s2), output=str(fname), product=product)
+                    chunks.append(fname)
+                    print(f'      Chunk [{w:.1f},{s:.1f}] OK')
+                except Exception as e:
+                    print(f'      Chunk [{w:.1f},{s:.1f}] fallo: {e}')
+            else:
+                chunks.append(fname)
+            s = s2
+        w = w2
+
+    # Fusionar chunks
+    if len(chunks) > 1:
+        print(f'   Fusionando {len(chunks)} chunks...')
+        datasets = [rasterio.open(c) for c in chunks if c.exists()]
+        if datasets:
+            from rasterio.merge import merge as _merge
+            mosaic, transform = _merge(datasets)
+            meta = datasets[0].meta.copy()
+            meta.update(driver='GTiff', height=mosaic.shape[1], width=mosaic.shape[2],
+                       transform=transform, compress='lzw', predictor=2)
+            with rasterio.open(output_path, 'w', **meta) as dst:
+                dst.write(mosaic)
+            for ds in datasets:
+                ds.close()
+            # Limpiar chunks
+            for c in chunks:
+                c.unlink(missing_ok=True)
+    elif len(chunks) == 1 and chunks[0].exists():
+        chunks[0].rename(output_path)
+
+    return chunks
+
+
+def _merge_chunks(chunks, output_path):
+    """Fusiona una lista de archivos GeoTIFF en uno solo."""
+    if not chunks:
+        return
+    if len(chunks) == 1:
+        chunks[0].rename(output_path)
+        return
+    from rasterio.merge import merge as _merge
+    datasets = [rasterio.open(c) for c in chunks if c.exists()]
+    if datasets:
+        mosaic, transform = _merge(datasets)
+        meta = datasets[0].meta.copy()
+        meta.update(driver='GTiff', height=mosaic.shape[1], width=mosaic.shape[2],
+                   transform=transform, compress='lzw', predictor=2)
+        with rasterio.open(output_path, 'w', **meta) as dst:
+            dst.write(mosaic)
+        for ds in datasets:
+            ds.close()
+        for c in chunks:
+            c.unlink(missing_ok=True)
 
 
 def descargar_dem_depto(codigo: str, output_dir: Path = None):
@@ -43,8 +113,21 @@ def descargar_dem_depto(codigo: str, output_dir: Path = None):
     print('   Descargando SRTM 30m (elevation)...')
 
     try:
-        import elevation
-        elevation.clip(bounds=(west, south, east, north), output=str(dem_path), product='SRTM1')
+        import elevation as _elv
+        from rasterio.merge import merge as _merge
+
+        # elevation limita a ~12 tiles. Si el bbox es muy grande, partir en sub-bboxes.
+        width = east - west
+        height = north - south
+        if width > 3.0 or height > 3.0:
+            print(f'   Departamento grande ({width:.1f}°x{height:.1f}°), partiendo en sub-bloques...')
+            chunks = _descargar_por_cuadrantes(west, south, east, north, dem_path, product='SRTM1')
+        else:
+            _elv.clip(bounds=(west, south, east, north), output=str(dem_path), product='SRTM1')
+            chunks = [dem_path] if dem_path.exists() else []
+        
+        if not dem_path.exists() and chunks:
+            _merge_chunks(chunks, dem_path)
     except Exception as e:
         print(f'   Elevation fallo: {e}')
         print('   Probando OpenTopography...')

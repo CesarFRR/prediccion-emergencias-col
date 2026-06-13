@@ -1,0 +1,67 @@
+{
+  "/home/cesar/dev/floodmodel-colombia/.opencode/opencode.json": {
+    "mtime": 1781216698.2439513,
+    "ast_hash": "e5f74d14a81702b55bdf53b33ec991d7",
+    "semantic_hash": "e5f74d14a81702b55bdf53b33ec991d7"
+  },
+  "/home/cesar/dev/floodmodel-colombia/.opencode/package.json": {
+    "mtime": 1781216706.2860954,
+    "ast_hash": "c9442b1dfba4cd254e8dc712cf2d3da8",
+    "semantic_hash": "c9442b1dfba4cd254e8dc712cf2d3da8"
+  },
+  "/home/cesar/dev/floodmodel-colombia/.opencode/plugins/graphify.js": {
+    "mtime": 1781216656.8800702,
+    "ast_hash": "64ccd3c03dbfe0980b6095766f5c4e52",
+    "semantic_hash": "64ccd3c03dbfe0980b6095766f5c4e52"
+  },
+  "/home/cesar/dev/floodmodel-colombia/app.py": {
+    "mtime": 1781076835.2542264,
+    "ast_hash": "d9e6d12ff82db974e4726929e10fd7f8",
+    "semantic_hash": "d9e6d12ff82db974e4726929e10fd7f8"
+  },
+  "/home/cesar/dev/floodmodel-colombia/core/detector_nivel.py": {
+    "mtime": 1780878812.7081716,
+    "ast_hash": "0206bf066ed3893d7475a45980e05753",
+    "semantic_hash": "0206bf066ed3893d7475a45980e05753"
+  },
+  "/home/cesar/dev/floodmodel-colombia/core/extractor_geopackage.py": {
+    "mtime": 1780885689.280448,
+    "ast_hash": "d240e949875038d59542d8239a2aa3ee",
+    "semantic_hash": "d240e949875038d59542d8239a2aa3ee"
+  },
+  "/home/cesar/dev/floodmodel-colombia/core/features.py": {
+    "mtime": 1780878834.3953984,
+    "ast_hash": "562eecc6c13a8aa8329409877e8cdae0",
+    "semantic_hash": "562eecc6c13a8aa8329409877e8cdae0"
+  },
+  "/home/cesar/dev/floodmodel-colombia/core/pipeline.py": {
+    "mtime": 1781054672.0916908,
+    "ast_hash": "bb679fd971807cdbf04f065b8f995ed4",
+    "semantic_hash": "bb679fd971807cdbf04f065b8f995ed4"
+  },
+  "/home/cesar/dev/floodmodel-colombia/gee/extraccion_colombia.js": {
+    "mtime": 1780952678.5893078,
+    "ast_hash": "b3b59b31afc44d60389263c8e8e10c72",
+    "semantic_hash": "b3b59b31afc44d60389263c8e8e10c72"
+  },
+  "/home/cesar/dev/floodmodel-colombia/gee/procesar_exports.py": {
+    "mtime": 1780886662.103573,
+    "ast_hash": "646461b359a9598123ed4fcfb9325e96",
+    "semantic_hash": "646461b359a9598123ed4fcfb9325e96"
+  },
+  "/home/cesar/dev/floodmodel-colombia/main.py": {
+    "mtime": 1781077168.5944355,
+    "ast_hash": "60fc2edfc41f1838d1d4beda4ccabae8",
+    "semantic_hash": "60fc2edfc41f1838d1d4beda4ccabae8"
+  },
+  "/home/cesar/dev/floodmodel-colombia/utils/enlaces.json": {
+    "mtime": 1781105612.5882454,
+    "ast_hash": "f04b1aa45c6029d742e4b3bcc769c480",
+    "semantic_hash": "f04b1aa45c6029d742e4b3bcc769c480"
+  },
+  "/home/cesar/dev/floodmodel-colombia/README.md": {
+    "mtime": 1781105607.2651398,
+    "ast_hash": "c6b5c2ddb1a61924c7b0229cdf62ee92",
+    "semantic_hash": "c6b5c2ddb1a61924c7b0229cdf62ee92"
+  }
+}

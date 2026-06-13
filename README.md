@@ -16,7 +16,7 @@ git clone https://github.com/CesarFRR/prediccion-emergencias-col.git
 cd prediccion-emergencias-col
 
 # 2. Instalar dependencias
-pip install pandas numpy lightgbm scikit-learn geopandas pyarrow
+pip install pandas numpy lightgbm scikit-learn geopandas pyarrow elevation
 
 # 3. Descargar datos nacionales (~24 MB, +1.7 GB opcional)
 python app.py

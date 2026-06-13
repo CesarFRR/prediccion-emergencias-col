@@ -50,3 +50,8 @@ departamentos/*
 *.shx
 *.dbf
 *.gdb/
+
+# ─── OpenCode ───
+.opencode/
+graphify-out/
+AGENTS.md

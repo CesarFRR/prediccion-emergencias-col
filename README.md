@@ -1,6 +1,6 @@
 # 🌊 Prediccion de Emergencias — Colombia
 
-**"Este repositorio es un framework automatizado en Python para predecir emergencias (principalmente inundaciones) en los departamentos de Colombia, que entrena modelos de machine learning y Physics-AI utilizando datos de precipitación, radar y elevación para generar alertas tempranas.""**
+**"Este repositorio es un framework automatizado en Python para predecir emergencias (principalmente inundaciones) en los departamentos de Colombia, que entrena modelos de machine learning y Physics-AI utilizando datos de precipitación, radar y elevación para generar alertas tempranas."**
 
 **Framework automatizado de prediccion de emergencias por departamento.**
 
